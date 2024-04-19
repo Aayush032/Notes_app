@@ -1,9 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:notes_app/components/notes_tile.dart';
 import 'package:notes_app/models/note.dart';
 import 'package:notes_app/models/note_database.dart';
 import 'package:notes_app/pages/new_note_page.dart';
+import 'package:notes_app/pages/update_and_view_page.dart';
 import 'package:notes_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,10 +18,27 @@ class NotesPage extends StatefulWidget {
 
 class _NotesPageState extends State<NotesPage> {
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
   
   //tO READ THE NOTES FROM THE DB
   void readNotes(){
     context.watch<NoteDatabase>().readNotes();
+  }
+
+  //update the notes
+  void updateNotes(Note note){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> UpdateAndViewPage(note: note)));
+  }
+
+
+  //Delete the notes
+  void deleteNode(int id){
+    context.read<NoteDatabase>().deleteNote(id);
+  }
+  @override
+  void initState() {
+    super.initState();
+    context.read<NoteDatabase>().readNotes();
   }
 
   @override
@@ -62,8 +81,14 @@ class _NotesPageState extends State<NotesPage> {
         itemCount: currentNotes.length,
         itemBuilder: (context,index){
           final note = currentNotes[index];
-          return ListTile(
-            title: Text(note.title),
+          return InkWell(
+            onTap: (){
+              updateNotes(note);
+            },
+            child: NotesTile(
+              note: note,
+              deleteNode: () => deleteNode(note.id),
+              )
           );
         }),
     );

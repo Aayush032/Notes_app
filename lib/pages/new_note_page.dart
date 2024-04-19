@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/components/custom_textfield.dart';
-import 'package:notes_app/models/note.dart';
+
 import 'package:notes_app/models/note_database.dart';
 import 'package:provider/provider.dart';
 
