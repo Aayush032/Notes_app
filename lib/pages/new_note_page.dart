@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/components/color_selector.dart';
 import 'package:notes_app/components/custom_textfield.dart';
 
 import 'package:notes_app/models/note_database.dart';
+import 'package:notes_app/theme/bg_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewNotePage extends StatefulWidget {
@@ -15,7 +17,6 @@ class _NewNotePageState extends State<NewNotePage> {
   String title = "";
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,8 @@ class _NewNotePageState extends State<NewNotePage> {
             child: TextButton(
                 onPressed: () {
                   //Add to database
-                  context.read<NoteDatabase>().addNewNote(titleController.text, descriptionController.text);
+                  context.read<NoteDatabase>().addNewNote(
+                      titleController.text, descriptionController.text);
                   Navigator.of(context).pop();
                 },
                 child: Text(
@@ -45,22 +47,47 @@ class _NewNotePageState extends State<NewNotePage> {
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold
-                      ),
+                      fontWeight: FontWeight.bold),
                 )),
           )
         ],
       ),
       body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Title field
             CustomTextField(
-                descriptionController: titleController, hintText: "Title", maxLines: 1,),
+              descriptionController: titleController,
+              hintText: "Title",
+              maxLines: 1,
+              bgColor: Provider.of<BackgroundProvider>(context).bgColor,
+            ),
 
             //Description field
             CustomTextField(
-                descriptionController: descriptionController, hintText: "Description", maxLines: 15,),
+              descriptionController: descriptionController,
+              hintText: "Description",
+              maxLines: 15,
+              bgColor: Provider.of<BackgroundProvider>(context).bgColor,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Text(
+                "Choose the background color for the note:",
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600
+                    ),
+              ),
+            ),
+            CustomColorSelector(),
           ],
         ),
       ),

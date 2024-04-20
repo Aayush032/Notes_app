@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/components/custom_textfield.dart';
 import 'package:notes_app/models/note.dart';
 import 'package:notes_app/models/note_database.dart';
+import 'package:notes_app/theme/bg_provider.dart';
 import 'package:provider/provider.dart';
 
 class UpdateAndViewPage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _UpdateAndViewPageState extends State<UpdateAndViewPage> {
               onPressed: () {
                 updateNotes(widget.note);
               },
-              child: Text("Update"),
+              child: Text("Update", style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary, fontSize: 18),),
             ),
           )
         ],
@@ -45,11 +46,11 @@ class _UpdateAndViewPageState extends State<UpdateAndViewPage> {
           children: [
               //Title field
               CustomTextField(
-                  descriptionController: titleController, hintText: "Title", maxLines: 1,),
+                  descriptionController: titleController, hintText: "Title", maxLines: 1, bgColor: Provider.of<BackgroundProvider>(context).bgColor,),
         
               //Description field
               CustomTextField(
-                  descriptionController: descriptionController, hintText: "Description", maxLines: 15,),
+                  descriptionController: descriptionController, hintText: "Description", maxLines: 15,bgColor: Provider.of<BackgroundProvider>(context).bgColor,),
           ],
         ),
       ),

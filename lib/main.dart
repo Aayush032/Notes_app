@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/models/note_database.dart';
 import 'package:notes_app/pages/notes_page.dart';
+import 'package:notes_app/theme/bg_provider.dart';
 import 'package:notes_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NoteDatabase.initialize();
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => NoteDatabase(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-    ),
-  ],
-  child: const MyApp(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => NoteDatabase(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => BackgroundProvider(),
+      ),
+    ],
+    child: const MyApp(),
   ));
 }
 

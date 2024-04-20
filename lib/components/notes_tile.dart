@@ -12,15 +12,23 @@ class NotesTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       padding: const EdgeInsets.only(left: 12, right: 0, top: 15, bottom: 15),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.tertiary,
-        borderRadius: BorderRadius.circular(12)
-      ),
+          color: Theme.of(context).colorScheme.tertiary,
+          borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-              title: Text(note.title),
-              trailing: IconButton(onPressed: (){
-               deleteNode();
-              }, icon: Icon(Icons.delete)),
-            ),
+        title: Text(
+          note.title,
+          style: TextStyle(
+              fontSize: 22,
+              color: Theme.of(context).colorScheme.inversePrimary,
+              fontWeight: FontWeight.w600
+              ),
+        ),
+        trailing: IconButton(
+            onPressed: () {
+              deleteNode();
+            },
+            icon: Icon(Icons.delete)),
+      ),
     );
   }
 }
